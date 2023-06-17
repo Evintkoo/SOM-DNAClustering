@@ -14,7 +14,7 @@ setup(
     description="A DNA clustering with implementation of Self Organizing Map",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="", #add the github link later - normal link
+    url="https://github.com/Evintkoo/SOM-DNAClustering", #add the github link later - normal link
     author="Evint Leovonzko",
     author_email="evint.koo@gmail.com",
     license="None",
