@@ -1,5 +1,4 @@
 import numpy as np
-import sklearn_som.som as SOM
 import math
 
 # Count k-mers is an encoding method that counts total number of its substring that appear in the string with length of K
