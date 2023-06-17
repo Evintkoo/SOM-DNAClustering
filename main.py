@@ -1,5 +1,10 @@
-from modules.DNAencoding import dnaStrandEncoding
-from modules.som import factorize
+from modules.dna_encoder import encodeStrand
+import modules.som_finder as finder
 
-# print(dnaStrandEncoding(["acgtgacatcagcatcagcatcagcaggcagcagta"]))
-print(factorize(10*16))
+x = encodeStrand(["AaCATAGCATgcTCgTCAGAGACT", 
+                  "acgcgcgcactcagcatcgactgcatcgactagcatgcatcga", 
+                  "actactcgcatgcatcgctaccctagctggatcgatc",
+                  "actcattcatcatcastagcatatcatcatasactac"])
+print(x)
+a = finder.find_model(x.values, total_rep= 2, random_state = 1)
+print(a)

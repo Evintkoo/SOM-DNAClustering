@@ -1,5 +1,7 @@
 import numpy as np
 import math
+import pandas as pd
+import warnings
 
 # Count k-mers is an encoding method that counts total number of its substring that appear in the string with length of K
 def count_kmers(sequence:str, k_size:int) -> dict():
@@ -15,11 +17,27 @@ def count_kmers(sequence:str, k_size:int) -> dict():
             data[kmer] = 1
     return data
 
+# filter the valid dna strands
+def validStrandList(strandList: list()):
+    valid_nucleotides = "acgt"
+    ok = "0123456789abcdef"
+    x = "acgt"
+    return [strands for strands in strandList if all(char in valid_nucleotides for char in strands)]
+
 # dnaStrandEncoding is encode the list of DNA strand -> list(string) return the substrands and matrix of encoded DNA 
-def dnaStrandEncoding(dnaStrandList: list()) -> list():
+def encodeStrand(dnaStrandList: list()) -> pd.DataFrame():
     #ensure that all of the dna that inserted are unique
+    dnaStrandList = [str.lower(i) for i in dnaStrandList]
     dnaStrandList = np.unique(dnaStrandList)
+    # ensure all of the strands are valid
+    validatedStrand = validStrandList(dnaStrandList)
     
+    if len(validatedStrand) == 0:
+        raise ValueError("All of the strands are not valid, please re check your data")
+    elif len(dnaStrandList) > len(validatedStrand):
+        warnings.warn("some of the strands are not valid")
+    
+    dnaStrandList = validatedStrand
     #calculate the average length of the DNA strands
     average_dna_length = sum([len(strands) for strands in dnaStrandList])/len(dnaStrandList)
     
@@ -52,5 +70,7 @@ def dnaStrandEncoding(dnaStrandList: list()) -> list():
             except:
                 dict_to_List.append(0)
         encoded_dna_list.append(dict_to_List)
-    
-    return parameters, encoded_dna_list
+        
+    # convert matrix in list type to DataFrame
+    encoded_matrix = pd.DataFrame(encoded_dna_list, columns=parameters)
+    return encoded_matrix
