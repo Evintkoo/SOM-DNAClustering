@@ -24,5 +24,5 @@ setup(
     ],
     packages=["som_dna_clustering"],
     include_package_data=True,
-    install_requires=["numpy", "math", "sklearn"],
+    install_requires=["numpy", "sklearn", "pandas"],
 )

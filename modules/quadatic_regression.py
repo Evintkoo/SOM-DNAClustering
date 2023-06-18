@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib as plt
 
 class quadatic_function():
     def __init__(self, a, b, c) -> None:
