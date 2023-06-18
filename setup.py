@@ -9,7 +9,7 @@ README = (HERE / "README.md").read_text()
 
 # This call to setup() does all the work
 setup(
-    name="",
+    name="som-dna-clustering",
     version="1.0.0",
     description="A DNA clustering with implementation of Self Organizing Map",
     long_description=README,
@@ -19,11 +19,10 @@ setup(
     author_email="evint.koo@gmail.com",
     license="None",
     classifiers=[
-        "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.10",
     ],
     packages=["som_dna_clustering"],
     include_package_data=True,
-    install_requires=["numpy", "math"],
+    install_requires=["numpy", "math", "sklearn"],
 )
