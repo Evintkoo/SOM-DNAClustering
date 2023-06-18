@@ -22,4 +22,4 @@ data = ["AaCATAGCATgcTCgTCAGAGACT",
 best_model = best_som_fit(X=data)
 ```
 
-Note: this library have already implemented data cleaning, so you do not need to worry about your data, and you could use this library's features such as correlation analysis by using ""
+Note: this library have already implemented data cleaning, so you do not need to worry about your data, and you could use this library's features such as correlation analysis by using feature_selection = None or an integer
