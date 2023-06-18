@@ -13,12 +13,19 @@ class selfOrganizingMaps():
         self.score = shs
         self.param_corr = data_correlation
         
-    def predict(self, X):
+        
+    def input_matrix(self, X):
         encoded_strands = encodeStrand(X)
         X_predict = encoded_strands[self.params_]
+        return X_predict
+    
+    def predict(self, X):
+        X_predict = self.input_matrix(X)
         model = self.model
         pred = model.predict(X_predict.values)
         return pred
+    
+    
 
 def best_som_fit(X: np.ndarray, feature_selection=None, corelation_treshold = 0.0, total_rep = 5, random_state = 5, max_iter = 3000, epoch = 1, learning_rate = 1, sigma = 1):
     """

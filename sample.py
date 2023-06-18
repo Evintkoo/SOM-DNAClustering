@@ -3,9 +3,12 @@ from modules.dna_encoder import encodeStrand
 
 
 data = ["AaCATAGCATgcTCgTCAGAGACT", 
-        "acgcgcgcactcagcatcgactgcatcgactagcatgcatcga", 
-        "actactcgcatgcatcgctaccctagctggatcgatc",
-        "actcattcatcatcastagcatatcatcatasactac"]
+        "acgcgcgcactcagcatcgactgcatcgactagcatgcatcgatagcgtacgt", 
+        "actactcgcatgcatcgctaccctagctggatcgatyhccatgacgtacgtc",
+        "actcattcatcatcastagcatatcatcatasactatacaaaacagtgactgacdgtc",
+        "actactatatactagatcgtactgcatgcatgcatgcagtcagtactgcatg",
+        "aaacacacaacaaaaaaaaaahthcathcathcathctahctatcthachtacth",
+        "aaaaaaaaacacacataccgactgagctagtgtaaaaaaaaaattgctagtggctatc"]
 best_model = best_som_fit(X=data,feature_selection=3)
 print("result of encoding:")
 print(encodeStrand(data))
@@ -18,3 +21,5 @@ print("Feature Correlation Matrix")
 print(best_model.param_corr)
 print("Prediciton of the data:")
 print(best_model.predict(data))
+print("Input clustering matrix")
+print(best_model.input_matrix(data))

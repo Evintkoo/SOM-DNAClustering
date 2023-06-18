@@ -2,6 +2,7 @@ import numpy as np
 import modules.som as som
 from sklearn.metrics import silhouette_score 
 import modules.dna_encoder
+import modules.quadatic_regression as quadres
     
 # factorize is find numbers that could divide the input
 def factorize(num: int) -> list():
@@ -20,6 +21,29 @@ def best_matrix_size(X:list(), matrix_size: int, max_iter = 3000 , epoch = 1, le
         silhouette_scores.append(silhouette_score(X, predictions))
     return models[np.array(silhouette_scores).argmax()], max(silhouette_scores)
 
+def som_peak_test(X, som_hist, som_scores, max_iter=3000, epoch = 1, learning_rate = 1, sigma = 1):
+    X_quadreg = [(model.m * model.n) for model in som_hist]
+    y_quadreg = som_scores
+    quad_model = quadres.quadratic_regression(X_quadreg,y_quadreg)
+    best_size = int(quad_model.peak_point()[0])
+    models_hist = list()
+    models_silhouetterScore = list()
+    if best_size-2 <= 1: 
+        min_size = best_size
+        if best_size < 2:
+            min_size = 2
+    else:
+        min_size = best_size-2
+    if min_size + 3 > X.shape[1]-1:
+        max_size = X.shape[1]-1
+    else: 
+        max_size = min_size + 3
+    for matrix_size in range(min_size,max_size):
+        model, shs = best_matrix_size(X, matrix_size, max_iter=max_iter, epoch= epoch, learning_rate = learning_rate, sigma = sigma)
+        models_hist.append(model)
+        models_silhouetterScore.append(shs)
+    return models_hist[np.array(models_silhouetterScore).argmax()], max(models_silhouetterScore)
+
 def test_som(X, array_n_cluster, max_iter=3000, epoch = 1, learning_rate = 1, sigma = 1):
     models_hist = list()
     models_silhouetterScore = list()
@@ -28,7 +52,11 @@ def test_som(X, array_n_cluster, max_iter=3000, epoch = 1, learning_rate = 1, si
         predictions = model.predict(X)
         models_hist.append(model)
         models_silhouetterScore.append(silhouette_score)
-    return models_hist, models_silhouetterScore
+        
+    # perform quadratic regression based on matrix size and silhouette score
+    best_model, shs = som_peak_test(X, models_hist, models_silhouetterScore, max_iter=max_iter, epoch= epoch, learning_rate = learning_rate, sigma = sigma)
+    return best_model, models_silhouetterScore
+    # return models_hist[np.array(models_silhouetterScore).argmax()], max(models_silhouetterScore)
 
 def find_model(X: np.ndarray, total_rep = 5, random_state = 5, max_iter = 3000, epoch = 1, learning_rate = 1, sigma = 1):
     """
@@ -77,6 +105,6 @@ def find_model(X: np.ndarray, total_rep = 5, random_state = 5, max_iter = 3000, 
             array_n_cluster = [random_state*i for i in range(1,total_rep+2)]
     
     models, shs = test_som(X, array_n_cluster, max_iter=max_iter, epoch = epoch, learning_rate = learning_rate, sigma=sigma)
-    return models[np.array(shs).argmax()], max(shs)
+    return models, shs
 
 
