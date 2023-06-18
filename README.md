@@ -1,4 +1,7 @@
 # Instalation
+```
+git clone https://github.com/Evintkoo/SOM-DNAClustering.git
+```
 
 A library to cluster DNA strands with Self Organizing Map clustering.
 
